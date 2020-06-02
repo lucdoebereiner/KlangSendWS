@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+    <head>
+	<title>KlangSendWS Listener</title>
+	<meta charset="utf-8" />
+    </head>
+    <body>
+	<h1>KlangSendWS Listener</h1>
+        <audio controls></audio>
+
+    </body>
+
+
+    <script>
+
+
+     window.onload = function() {
+
+	 let websocket = new WebSocket("ws://78.55.133.59:3012");
+	 
+	 websocket.binaryType = 'arraybuffer';
+
+	 
+	 var mediaSource = new MediaSource();
+	 var buffer;
+	 var queue = [];
+
+	 var audio = document.querySelector('audio');
+	 audio.src = window.URL.createObjectURL(mediaSource);
+
+	 
+	 mediaSource.addEventListener('sourceopen', function(e) {
+	     console.log("source open");
+
+	     buffer = mediaSource.addSourceBuffer('audio/mpeg');
+
+	     buffer.addEventListener('updatestart', function(e) { console.log('updatestart: ' + mediaSource.readyState); });
+	     buffer.addEventListener('update', function(e) { console.log('update: ' + mediaSource.readyState); });
+	     buffer.addEventListener('updateend', function(e) { console.log('updateend: ' + mediaSource.readyState); });
+	     buffer.addEventListener('error', function(e) { console.log('error: ' + mediaSource.readyState); console.log(e); });
+	     buffer.addEventListener('abort', function(e) { console.log('abort: ' + mediaSource.readyState); });
+
+	     buffer.addEventListener('update', function() { // Note: Have tried 'updateend'
+		 if (audio.paused && !buffer.updating && (buffer.duration > 0)) {
+		     buffer.remove(0, buffer.duration)
+		 }
+
+		 if (queue.length > 0 && !buffer.updating) {
+		     buffer.appendBuffer(queue.shift());
+		 }
+	     });
+	 }, false);
+
+	 mediaSource.addEventListener('sourceopen', function(e) { console.log('sourceopen: ' + mediaSource.readyState); });
+	 mediaSource.addEventListener('sourceended', function(e) { console.log('sourceended: ' + mediaSource.readyState); });
+	 mediaSource.addEventListener('sourceclose', function(e) { console.log('sourceclose: ' + mediaSource.readyState); });
+	 mediaSource.addEventListener('error', function(e) { console.log('error: ' + mediaSource.readyState); });
+
+
+	 
+	 websocket.onopen = function (event) {
+
+
+	     websocket.addEventListener('message', function(e) {
+		 if (typeof e.data !== 'string') {
+		     if (buffer != undefined && (buffer.updating || queue.length > 0)) {
+			 queue.push(e.data);
+		     } else if (buffer != undefined) {
+			 buffer.appendBuffer(e.data);
+		     }
+		 }
+	     }, false);
+	     
+
+	 }
+
+
+
+     }
+
+
+     
+    </script>
+    
+</html>
