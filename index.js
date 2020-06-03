@@ -12,8 +12,8 @@ var connections = [];
 //     "-c:a", "libopus", "-b:a", "128k",
 //     "-f", "opus",
 //     "-max_delay", "0",
-//     "-flush_packets", "1", 
-//     "pipe:1"         
+//     "-flush_packets", "1",
+//     "pipe:1"
 //     ]);
 
 
@@ -24,7 +24,7 @@ var connections = [];
 //     "-f", "mp3",
 //     "-b:a", "128k",
 //     "-max_delay", "0",
-//     "-flush_packets", "1", 
+//     "-flush_packets", "1",
 //     "pipe:1",
 //     "<", "/dev/null"
 //     ]);
@@ -32,7 +32,7 @@ var connections = [];
 
 
 var ffmpeg = child_process.spawn("bash",[
-    "/home/luc/Work/klangraum/nodeklang/encode.sh"         
+    "/var/www/html/KlangSendWS/encode.sh"
     ]);
 
 

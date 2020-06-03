@@ -16,11 +16,11 @@
 
      window.onload = function() {
 
-	 let websocket = new WebSocket("ws://78.55.133.59:3012");
-	 
+	 let websocket = new WebSocket("ws://localhost:3012");
+
 	 websocket.binaryType = 'arraybuffer';
 
-	 
+
 	 var mediaSource = new MediaSource();
 	 var buffer;
 	 var queue = [];
@@ -28,11 +28,11 @@
 	 var audio = document.querySelector('audio');
 	 audio.src = window.URL.createObjectURL(mediaSource);
 
-	 
+
 	 mediaSource.addEventListener('sourceopen', function(e) {
 	     console.log("source open");
 
-	     buffer = mediaSource.addSourceBuffer('audio/mpeg');
+	     buffer = mediaSource.addSourceBuffer('audio/webm; codecs=opus')
 
 	     buffer.addEventListener('updatestart', function(e) { console.log('updatestart: ' + mediaSource.readyState); });
 	     buffer.addEventListener('update', function(e) { console.log('update: ' + mediaSource.readyState); });
@@ -57,7 +57,7 @@
 	 mediaSource.addEventListener('error', function(e) { console.log('error: ' + mediaSource.readyState); });
 
 
-	 
+
 	 websocket.onopen = function (event) {
 
 
@@ -70,7 +70,7 @@
 		     }
 		 }
 	     }, false);
-	     
+
 
 	 }
 
@@ -79,7 +79,7 @@
      }
 
 
-     
+
     </script>
-    
+
 </html>
