@@ -34,3 +34,9 @@ start and http-server serving your files (on port 8081). Go to
 `http://localhost:8081/listener.html?server=192.168.1.11`). Connect
 input to ffmpeg in jack. It should now be played back in the browser.
 
+
+# TODO
+
+- Deal with pause
+- Limit length of queue before first playback
+- Reconnection
