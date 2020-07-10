@@ -1,4 +1,4 @@
-ffmpeg  -loglevel quiet -ac 2 -f jack -i ffmpeg_out -f webm -c:a libvorbis -b:a 128k  -max_delay 0 -flush_packets 1 pipe:1  < /dev/null
+ffmpeg  -loglevel quiet -ac 2 -f jack -i ffmpeg_out -f webm -c:a libvorbis -b:a 128k  -ar 44100  -max_delay 0 -flush_packets 1 pipe:1  < /dev/null
 
 # gst-launch-1.0 jackaudiosrc ! audioconvert ! opusenc ! webmmux ! filesink location=/dev/stdout
 

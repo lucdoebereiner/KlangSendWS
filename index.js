@@ -4,7 +4,7 @@ const child_process = require("child_process");
 const wss = new WebSocket.Server({ port: 3012});
 
 var ffmpeg = child_process.spawn("bash",[
-    "/home/luc/Work/klangraum/nodeklang/encode.sh"         
+    "encode.sh"         
 ], {
     stdio: [ 'ignore', 'pipe', 'pipe' ]    
 });
@@ -12,6 +12,11 @@ var ffmpeg = child_process.spawn("bash",[
 
 ffmpeg.stdout.on('data', function(data) {
     var buffer = data.buffer;
+
+    // const view = new Uint8Array(buffer);
+    
+    // console.log(view.toString());
+    // console.log('\n\n');
     
     wss.clients.forEach(function each(client) {
     	if (client.readyState === WebSocket.OPEN) {
