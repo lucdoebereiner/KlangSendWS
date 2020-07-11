@@ -1,14 +1,8 @@
-console.log('wsplayer');
-
 const urlParams = new URLSearchParams(window.location.search);
 const server = urlParams.get('server');
 const debugMode = false;
 
-
-
 window.onload = function() {
-
-    console.log('loaded');
     
     var mediaSource = new MediaSource();
     var buffer;
@@ -18,13 +12,11 @@ window.onload = function() {
     const audio = document.querySelector('audio');
     audio.src = window.URL.createObjectURL(mediaSource);
 
-    var playButton = document.getElementById('play-button');
+    const playButton = document.getElementById('play-button');
     playButton.onclick = () => playPause();
 
-    console.log(playButton);
     
     function playPause() {
-	console.log('play pause');
 	if (playing) {
 	    playing = false;
 	    playButton.innerText = "Play";
@@ -32,7 +24,6 @@ window.onload = function() {
 	    audio.pause();
 	    if (buffer.duration > 0) { buffer.remove(0, buffer.duration); };
 	} else {
-	    console.log('start buffering');
 	    playing = true;
 	    playButton.innerText = "Buffering";
 	    playButton.disabled = true;
