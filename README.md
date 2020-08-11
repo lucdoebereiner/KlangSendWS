@@ -30,8 +30,9 @@ $ ./start.sh
 
 This will boot the websocket server (on port 3012), start ffmpeg and
 start and http-server serving your files (on port 8080). Go to
-`http://<yourpublicip>:8080/listener.html?server=<ip>` (for example
-`http://localhost:8080/listener.html?server=192.168.1.11`). Connect
+`http://<yourpublicip>:8080/listener.html?server=<ip>&channel=<jack
+channel>` (for example
+`http://localhost:8080/listener.html?server=localhost&channel=0`). Connect
 input to ffmpeg in jack. It should now be played back in the browser.
 
 

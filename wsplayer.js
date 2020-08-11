@@ -1,5 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const server = urlParams.get('server');
+const jackChannel = urlParams.get('channel');
 const debugMode = false;
 
 window.onload = function() {
@@ -40,11 +41,12 @@ window.onload = function() {
     
     mediaSource.addEventListener('sourceopen', function(e) {
 
-	buffer = mediaSource.addSourceBuffer('audio/webm; codecs="vorbis"'); 
+//	buffer = mediaSource.addSourceBuffer('audio/webm; codecs="vorbis"');
+	buffer = mediaSource.addSourceBuffer('audio/mpeg'); 
 
 	buffer.mode = 'sequence';	
 	
-	buffer.appendBuffer(new Uint8Array(webmheadervorbis.buffer));
+//	buffer.appendBuffer(new Uint8Array(webmheadervorbis.buffer));
 	
 	buffer.addEventListener('update', function() { // Or 'updateend'
 	    
@@ -79,6 +81,9 @@ window.onload = function() {
     let websocket = new WebSocket("ws://" + server + ":3012");
     websocket.binaryType = 'arraybuffer';
     websocket.onopen = function (event) {
+
+	websocket.send(JSON.stringify({ channel: jackChannel }));
+	
 	websocket.addEventListener('message', function(e) {
 	    
 	    if (buffer.updating || (queue.length > 0) && playing) {
