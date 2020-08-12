@@ -3,7 +3,7 @@ const child_process = require("child_process");
 
 const wss = new WebSocket.Server({ port: 3012});
 
-const n_channels = 32;
+const n_channels = parseInt(process.argv[2]);
 
 var ffmpeg_processes = [];
 

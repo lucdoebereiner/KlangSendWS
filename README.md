@@ -25,7 +25,7 @@ $ npm install
 
 
 ``` shell
-$ ./start.sh
+$ ./start.sh <number of stereo pairs>
 ```
 
 This will boot the websocket server (on port 3012), start ffmpeg and

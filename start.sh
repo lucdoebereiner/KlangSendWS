@@ -1,2 +1,2 @@
-http-server . & node index.js && fg
+http-server . & node index.js $1
 
