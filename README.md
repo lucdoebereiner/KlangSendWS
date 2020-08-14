@@ -6,7 +6,6 @@ tested with Chrome and Firefox.
 
 ## Requirements
 
-- linux system
 - jack
 - ffmpeg
 - npm
@@ -23,10 +22,17 @@ $ npm install
 
 - Start jack.
 
-
+If you need to use the example client, a http server will also be started:
 ``` shell
 $ ./start.sh <number of stereo pairs>
 ```
+
+If you only need to run the web socket server/ffmpeg without the http server
+``` shell
+$ node index.js <number of stereo pairs>
+```
+
+
 
 This will boot the websocket server (on port 3012), start ffmpeg and
 start and http-server serving your files (on port 8080). Go to
